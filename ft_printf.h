@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 13:52:50 by tpinto-m          #+#    #+#             */
-/*   Updated: 2021/11/07 19:21:14 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2021/11/08 16:24:48 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stdio.h>
 # include <unistd.h>
 
-int	ft_printf(const char *, ...);
-int	ft_putchar_nb(char c);
-int	ft_putstr_nb(char *str);
+int		ft_printf(const char *, ...);
+void	ft_putchar_nb(char c, int *count);
+void	ft_putstr_nb(char *str, int *count);
 #endif

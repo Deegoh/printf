@@ -6,34 +6,26 @@
 /*   By: tpinto-m <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 16:44:34 by tpinto-m          #+#    #+#             */
-/*   Updated: 2021/11/07 19:54:32 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2021/11/08 18:57:53 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	check_arg(int i, const char *str, va_list argptr)
+void	check_arg(int i, const char *str, va_list argptr, int *count)
 {
 	char	*arg;
-	int		count;
 
-	count = 0;
-	//printf("ca:str:%s\n", str);
-	//printf("ca:arg:%c\n", arg);
-	//printf("ca:str[i]:%c\n", str[i]);
+	arg = va_arg(argptr, char*);
 	if (str[i + 1] == 'c')
-	{
-		arg = va_arg(argptr, char*);
-		count = ft_putchar_nb((char)arg);
-	}
+		ft_putchar_nb((int)arg, count);
 	else if (str[i + 1] == 's')
-	{
-		arg = va_arg(argptr, char*);
-		count = ft_putstr_nb(arg);
-	}
+		ft_putstr_nb((char *)arg, count);
+	//else if (str[i + 1] == 'p')
+		//ft_putstr_nb((char *)arg, count);
+
 	i++;
-	//str = va_arg(argptr, const char *);
-	return (count);
+	return ;
 }
 
 int	ft_printf(const char *str, ...)
@@ -51,28 +43,35 @@ int	ft_printf(const char *str, ...)
 	{
 		if (str[i] != '%')
 		{
-			count += ft_putchar_nb(str[i]);
+			ft_putchar_nb(str[i], &count);
 		}
 		else
 		{
-			count += check_arg(i++, str, argptr);
+			check_arg(i++, str, argptr, &count);
 		}
 		i++;
-		//check i et count pour le test 10
 	}
+	//printf("count:%d\n", count);
 	va_end(argptr);
 	return (count);
 }
 
+
 int	main(void)
 {
-	int		count;
-	int		nbr;
-	//char	str[] = "world";
-	nbr = printf(" NULL %s NULL ", NULL);
-	printf("\n%d", nbr);
-	printf("\n\n");
-	count = ft_printf(" NULL %s NULL ", NULL);
-	printf("\n%d\n", count);
+	//int		count;
+	//int		nbr;
+	char	str[] = "world";
+	long	mb;
+
+	mb = (long)str;
+
+	printf("ptr:%p", str);
+	//printf("%d", nbr);
+	printf("\n");
+	printf("ptr:%ld\n", mb );
+	printf("/16:%ld", mb/16 );
+	//count = ft_printf("NULL %c", 'c');
+	//printf("%d", count);
 }
 
