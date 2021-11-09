@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 16:44:34 by tpinto-m          #+#    #+#             */
-/*   Updated: 2021/11/08 18:57:53 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2021/11/09 17:53:22 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,36 @@ void	check_arg(int i, const char *str, va_list argptr, int *count)
 {
 	char	*arg;
 
-	arg = va_arg(argptr, char*);
+	arg = va_arg(argptr, char *);
 	if (str[i + 1] == 'c')
 		ft_putchar_nb((int)arg, count);
 	else if (str[i + 1] == 's')
 		ft_putstr_nb((char *)arg, count);
-	//else if (str[i + 1] == 'p')
-		//ft_putstr_nb((char *)arg, count);
-
+	else if (str[i + 1] == 'p')
+	{
+		ft_putstr_nb("0x", count);
+		ft_puthex((unsigned long)arg, count, ft_count_nbr((unsigned long)arg));
+	}
+	else if (str[i + 1] == 'd')
+		ft_putnbr_nb((int)arg, count);
+	else if (str[i + 1] == 'i')
+		ft_putnbr_nb((int)arg, count);
+	else if (str[i + 1] == 'u')
+		ft_putnbr_nb((unsigned int)arg, count);
+	/*
+	else if (str[i + 1] == 'x')
+		//ft_putnbr_nb((long)arg, count);
+	else if (str[i + 1] == 'X')
+		//ft_putnbr_nb((long)arg, count);
+	else if (str[i + 1] == '%')
+		//ft_putnbr_nb((long)arg, count);
+	*/
 	i++;
-	return ;
 }
 
 int	ft_printf(const char *str, ...)
 {
-	va_list argptr;
+	va_list	argptr;
 	int		i;
 	int		count;
 
@@ -51,27 +66,26 @@ int	ft_printf(const char *str, ...)
 		}
 		i++;
 	}
-	//printf("count:%d\n", count);
 	va_end(argptr);
 	return (count);
 }
-
-
+/*
 int	main(void)
 {
-	//int		count;
 	//int		nbr;
 	char	str[] = "world";
-	long	mb;
+	unsigned long	mb;
+	int count = 0;
 
-	mb = (long)str;
+	mb = (unsigned long)str;
 
-	printf("ptr:%p", str);
+	printf("\nptr:%p", str);
 	//printf("%d", nbr);
 	printf("\n");
-	printf("ptr:%ld\n", mb );
-	printf("/16:%ld", mb/16 );
+	printf("ptr:%lu\n", mb);
+	//printf("conv hex:%lx", ft_to_hex(140732794841354));
+	ft_puthex(140732835801418, &count);
 	//count = ft_printf("NULL %c", 'c');
-	//printf("%d", count);
+	printf("\ncount:%d\n", count);
 }
-
+*/

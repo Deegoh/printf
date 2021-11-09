@@ -6,11 +6,24 @@
 /*   By: tpinto-m <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 16:32:34 by tpinto-m          #+#    #+#             */
-/*   Updated: 2021/11/08 18:57:55 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2021/11/09 17:51:53 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+int	ft_count_nbr(unsigned long nbr)
+{
+	int	res;
+
+	res = 0;
+	while (nbr)
+	{
+		nbr /= 10;
+		res++;
+	}
+	return (res);
+}
 
 void	ft_putchar_nb(char c, int *count)
 {
@@ -21,7 +34,7 @@ void	ft_putchar_nb(char c, int *count)
 
 void	ft_putstr_nb(char *str, int *count)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (str == NULL)
@@ -35,4 +48,47 @@ void	ft_putstr_nb(char *str, int *count)
 		ft_putchar_nb(str[i++], count);
 	}
 	return ;
+}
+
+void	ft_puthex(unsigned long nb, int *count, int len)
+{
+	unsigned long	hex;
+
+	if (len == 0)
+		return (ft_putchar_nb('0', count));
+	if (nb > 0)
+	{
+		ft_puthex(nb / 16, count, len);
+		hex = nb % 16;
+		if (hex > 9)
+			ft_putchar_nb(hex + 'a' - 10, count);
+		else
+			ft_putchar_nb(hex + '0', count);
+	}
+	return ;
+}
+
+void	ft_putnbr_nb(int n, int *count)
+{
+	if (n == -2147483648)
+	{
+		ft_putstr_nb("-2147483648", count);
+		return ;
+	}
+	if (n < 0)
+	{
+		ft_putchar_nb('-', count);
+		n *= -1;
+		ft_putnbr_nb(n, count);
+	}
+	else if (n <= 9)
+	{
+		n += '0';
+		ft_putchar_nb(n, count);
+	}
+	else
+	{
+		ft_putnbr_nb(n / 10, count);
+		ft_putnbr_nb(n % 10, count);
+	}
 }
