@@ -7,7 +7,7 @@ CFLAGS = -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	ar -rc $(NAME) $(OBJ)
+	ar -rcs $(NAME) $(OBJ)
 
 compile:
 	$(CC) $(CFLAGS) $(SRC) && ./a.out | cat -e
@@ -20,4 +20,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re compile
