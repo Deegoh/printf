@@ -6,13 +6,13 @@
 /*   By: tpinto-m <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 16:32:34 by tpinto-m          #+#    #+#             */
-/*   Updated: 2021/11/09 17:51:53 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2021/11/12 10:06:04 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_count_nbr(unsigned long nbr)
+int	ft_len_nbr(unsigned long nbr)
 {
 	int	res;
 
@@ -39,8 +39,7 @@ void	ft_putstr_nb(char *str, int *count)
 	i = 0;
 	if (str == NULL)
 	{
-		write(1, &"(null)", 6);
-		*count = *count + 6;
+		*count += write(1, "(null)", 6);
 		return ;
 	}
 	while (str[i])
@@ -50,18 +49,29 @@ void	ft_putstr_nb(char *str, int *count)
 	return ;
 }
 
-void	ft_puthex(unsigned long nb, int *count, int len)
+void	ft_puthex(unsigned long nb, int *count, int arg, int first)
 {
 	unsigned long	hex;
+	int				letter;
+	int				len;
 
-	if (len == 0)
+	len = ft_len_nbr(nb);
+	letter = 'a';
+	if (arg == 'X')
+		letter = 'A';
+	else if (arg == 'p')
+	{
+		arg = 'n';
+		ft_putstr_nb("0x", count);
+	}
+	if (len == 0 && first)
 		return (ft_putchar_nb('0', count));
 	if (nb > 0)
 	{
-		ft_puthex(nb / 16, count, len);
+		ft_puthex(nb / 16, count, arg, 0);
 		hex = nb % 16;
 		if (hex > 9)
-			ft_putchar_nb(hex + 'a' - 10, count);
+			ft_putchar_nb(hex + letter - 10, count);
 		else
 			ft_putchar_nb(hex + '0', count);
 	}
