@@ -13,10 +13,10 @@ compile:
 	$(CC) $(CFLAGS) $(SRC) && ./a.out | cat -e
 
 clean:
-	rm $(OBJ)
+	rm -rf $(OBJ)
 
 fclean: clean
-	rm $(NAME)
+	rm -rf $(NAME)
 
 re: fclean all
 
